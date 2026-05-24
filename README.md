@@ -35,6 +35,3 @@ The SyncTalk ecosystem is engineered using industry-standard, lightweight, and m
 * **Lucide React:** A clean and consistent open-source iconography kit used for interface indicators, buttons, and system asset icons.
 
 ---
-
-## 👥 Project Collaborators
-* **Lead Engineer:** Alex Dev (@alex_dev)
