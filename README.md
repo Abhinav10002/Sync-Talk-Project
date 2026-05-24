@@ -36,5 +36,3 @@ The SyncTalk ecosystem is engineered using industry-standard, lightweight, and m
 
 ---
 
-## 👥 Project Collaborators
-* **Lead Engineer:** Alex Dev (@alex_dev)
