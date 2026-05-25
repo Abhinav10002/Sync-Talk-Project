@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: synctalk-backend
+    restart: always
+    environment:
+      - ENV=production
+      # In production, replace this with a secure, randomly-generated secret key string
+      - SECRET_KEY=prod_secure_secret_signing_key_synctalk_2026
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=1440
+      - DATABASE_URL=sqlite:////app/data/synctalk.db
+      # Add whitelisted production frontend client URLs here (comma-separated)
+      - ALLOWED_ORIGINS=http://localhost,http://127.0.0.1
+    volumes:
+      - sqlite-data:/app/data
+    networks:
+      - synctalk-network
+    # Keeps backend internal-only: port 8000 is not exposed to the host machine.
+    # Nginx on the frontend container communicates with it directly via internal hostname resolution.
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: synctalk-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - synctalk-network
+
+volumes:
+  sqlite-data:
+    name: synctalk-sqlite-data
+
+networks:
+  synctalk-network:
+    name: synctalk-internal-network
